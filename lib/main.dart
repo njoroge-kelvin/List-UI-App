@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+      const MaterialApp(
+        title: 'Test App',
+          home: MyApp())
+      );
+
 }
 
 class MyApp extends StatelessWidget {
@@ -10,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      body: Container(child: Center(child: Text('Flutter')),)
     );
   }
 }
