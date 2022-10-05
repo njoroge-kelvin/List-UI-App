@@ -4,33 +4,91 @@ void main() {
   runApp(const MaterialApp(
     title: 'List UI App',
     debugShowCheckedModeBanner: false,
-    home: DefaultTabController(length: 3, child: ListApp()),
+    // home: DefaultTabController(length: 3, child: ListApp()),
   ));
 }
 
-class ListApp extends StatelessWidget {
+final List<String> menu = ['Monday', 'Tuesday', 'Thursday'];
+const TextStyle menuStyle = TextStyle(color: Colors.black, fontSize: 13.0);
+
+class ListApp extends StatefulWidget {
   const ListApp({Key? key}) : super(key: key);
+
+  @override
+  State<ListApp> createState() => _ListAppState();
+}
+
+class _ListAppState extends State<ListApp> {
+  int _selectedMenu = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           title: Text('AppBar'),
-          bottom: TabBar(tabs: const [
+          bottom: TabBar(tabs: [
             Tab(
               icon: Icon(size: 20.0, Icons.account_balance_rounded),
+              child: PopupMenuButton(
+                onSelected: (value){
+                  setState(() {
+                    _selectedMenu = value;
+                  });
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
+                  PopupMenuItem(
+                    value: 2,
+                    child: Text(
+                      menu[2],
+                      style: menuStyle,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 1,
+                    child: Text(
+                      menu[1],
+                      style: menuStyle,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 2,
+                    child: Text(
+                      menu[0],
+                      style: menuStyle,
+                    ),
+                  ),
+                ],
+                child: Row(
+                  children: [
+                    Text(
+                      menu[2],
+                      style: menuStyle,
+                    ),
+                    Icon(
+                      Icons.keyboard_arrow_down,
+                      color: Colors.white,
+                    )
+                  ],
+                ),
+              ),
             ),
-            Tab(icon: Icon(size: 20.0, Icons.add_call),),
-            Tab(icon: Icon(size: 20.0, Icons.accessible_forward_rounded),),
+            Tab(
+              icon: Icon(size: 20.0, Icons.add_call),
+            ),
+            Tab(
+              icon: Icon(size: 20.0, Icons.accessible_forward_rounded),
+            ),
           ]),
         ),
-        body: TabBarView(
-          children: [
-            ListView(scrollDirection: Axis.vertical, children: [
-              for (var i = 0; i < 101; i++)
+        body: TabBarView(children: [
+          ListView(scrollDirection: Axis.vertical, children: [
+            for (var i = 0; i < 101; i++)
               Column(
                 children: [
-                  SizedBox(height: 5.0,),
+                  SizedBox(
+                    height: 5.0,
+                  ),
                   Container(
                     color: Colors.green,
                     child: Column(
@@ -45,28 +103,27 @@ class ListApp extends StatelessWidget {
                 ],
               ),
           ]),
-            ListView(scrollDirection: Axis.vertical, children: [
-              for (var i = 0; i < 101; i++)
-                Container(
-                  color: Colors.white,
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Center(child: Text('Item $i')),
-                  ),
+          ListView(scrollDirection: Axis.vertical, children: [
+            for (var i = 0; i < 101; i++)
+              Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Center(child: Text('Item $i')),
                 ),
-            ]),
-            ListView(scrollDirection: Axis.vertical, children: [
-              for (var i = 0; i < 101; i++)
-                Container(
-                  color: Colors.orange,
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Center(child: Text('Item $i')),
-                  ),
+              ),
+          ]),
+          ListView(scrollDirection: Axis.vertical, children: [
+            for (var i = 0; i < 101; i++)
+              Container(
+                color: Colors.orange,
+                child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Center(child: Text('Item $i')),
                 ),
-            ])
-          ]
-        ));
+              ),
+          ])
+        ]));
   }
 }
 
