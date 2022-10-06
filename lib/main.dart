@@ -4,11 +4,12 @@ void main() {
   runApp(const MaterialApp(
     title: 'List UI App',
     debugShowCheckedModeBanner: false,
-    // home: DefaultTabController(length: 3, child: ListApp()),
+    home: DefaultTabController(length: 3, child: ListApp()),
   ));
 }
 
-final List<String> menu = ['Monday', 'Tuesday', 'Thursday'];
+enum Menu {monday, tuesday, thursday}
+
 const TextStyle menuStyle = TextStyle(color: Colors.black, fontSize: 13.0);
 
 class ListApp extends StatefulWidget {
@@ -19,7 +20,7 @@ class ListApp extends StatefulWidget {
 }
 
 class _ListAppState extends State<ListApp> {
-  int _selectedMenu = 0;
+  String _selectedMenu = '';
 
   @override
   Widget build(BuildContext context) {
@@ -31,40 +32,36 @@ class _ListAppState extends State<ListApp> {
             Tab(
               icon: Icon(size: 20.0, Icons.account_balance_rounded),
               child: PopupMenuButton(
-                onSelected: (value){
+                onSelected: (Menu item){
                   setState(() {
-                    _selectedMenu = value;
+                    _selectedMenu = item.name;
                   });
                 },
-                itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
-                  PopupMenuItem(
-                    value: 2,
+                itemBuilder: (BuildContext context) => <PopupMenuItem<Menu>>[
+                  PopupMenuItem<Menu>(
+                    value: Menu.monday,
                     child: Text(
-                      menu[2],
+                      'Monday',
                       style: menuStyle,
                     ),
                   ),
-                  PopupMenuItem(
-                    value: 1,
+                  PopupMenuItem<Menu>(
+                    value: Menu.tuesday,
                     child: Text(
-                      menu[1],
+                      'Tuesday',
                       style: menuStyle,
                     ),
                   ),
-                  PopupMenuItem(
-                    value: 2,
+                  PopupMenuItem<Menu>(
+                    value: Menu.thursday,
                     child: Text(
-                      menu[0],
+                      'Thursday',
                       style: menuStyle,
                     ),
                   ),
                 ],
                 child: Row(
-                  children: [
-                    Text(
-                      menu[2],
-                      style: menuStyle,
-                    ),
+                  children: const [
                     Icon(
                       Icons.keyboard_arrow_down,
                       color: Colors.white,
@@ -93,6 +90,7 @@ class _ListAppState extends State<ListApp> {
                     color: Colors.green,
                     child: Column(
                       children: [
+                        Text('$_selectedMenu'),
                         Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Center(child: Text('Item $i')),
