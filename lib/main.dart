@@ -61,7 +61,8 @@ class _ListAppState extends State<ListApp> {
                   ),
                 ],
                 child: Row(
-                  children: const [
+                  children: [
+                    Text(_selectedMenu),
                     Icon(
                       Icons.keyboard_arrow_down,
                       color: Colors.white,
@@ -90,7 +91,7 @@ class _ListAppState extends State<ListApp> {
                     color: Colors.green,
                     child: Column(
                       children: [
-                        Text('$_selectedMenu'),
+                        Text(_selectedMenu),
                         Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Center(child: Text('Item $i')),
@@ -113,35 +114,59 @@ class _ListAppState extends State<ListApp> {
           ]),
           ListView(scrollDirection: Axis.vertical, children: [
             for (var i = 0; i < 101; i++)
-              Container(
-                color: Colors.orange,
-                child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Center(child: Text('Item $i')),
-                ),
+              Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.teal,
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
+                      ),]),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        radius: 25,
+                        backgroundImage: AssetImage('assets/images/Image1.jpg'),
+                        child: GestureDetector(
+                          onTap: () async {
+                            await showDialog(context: context, builder: (_) => ItemList());
+                        },
+                        ),
+                      ),
+                      title: Text('Leading TextTile'),
+                      subtitle: Text('This is a TextTile widget'),
+                      trailing: Icon(Icons.ac_unit_outlined),
+                      ),
+                    ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                ],
               ),
           ])
         ]));
   }
 }
 
-// class ItemList extends StatelessWidget {
-//   const ItemList({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Center(
-//       child: Expanded(
-//           flex: 1,
-//           child: ListView(
-//             scrollDirection:Axis.vertical,
-//             children: [
-//               for(var i = 0; i < 10; i++)
-//                 Container(
-//                   color: Colors.green,
-//                     child: Text('Item $i')),
-//            ]
-//       )),
-//     );
-//   }
-// }
+class ItemList extends StatelessWidget {
+  const ItemList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Container(
+          width: 100.0,
+          height: 200.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            image: DecorationImage(
+              image: ExactAssetImage('assets/images/Image1.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),),
+    );
+  }
+}
