@@ -1,16 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'Login_Page.dart';
 
-void main() {
-  runApp(const MaterialApp(
+void main() async{
+  //Firebase initialization asynchronous when app is opened
+  WidgetsFlutterBinding.ensureInitialized();
+  
+
+  runApp( MaterialApp(
+    theme: ThemeData(primarySwatch: Colors.red,),
     title: 'List UI App',
     debugShowCheckedModeBanner: false,
     home: DefaultTabController(length: 3, child: ListApp()),
   ));
 }
 
-enum Menu { monday, tuesday, thursday }
+class Menu {
+  const Menu({required this.day});
+
+  final String day;
+}
+
+final List<Menu> value = <Menu>[
+  Menu(day: 'Monday'),
+  Menu(day: 'Tuesday'),
+  Menu(day: 'Wednesday'),
+  Menu(day: 'Thursday'),
+
+];
 
 const TextStyle menuStyle = TextStyle(color: Colors.black, fontSize: 13.0);
+
+
 
 
 class ListApp extends StatefulWidget {
@@ -33,30 +54,29 @@ class _ListAppState extends State<ListApp> {
             Tab(
               icon: Icon(size: 20.0, Icons.account_balance_rounded),
               child: PopupMenuButton(
-                onSelected: (Menu item) {
+                onSelected: (Menu value) {
                   setState(() {
-                    _selectedMenu = item.name;
+                    _selectedMenu = value.day;
                   });
                 },
                 itemBuilder: (BuildContext context) => <PopupMenuItem<Menu>>[
                   PopupMenuItem<Menu>(
-                    value: Menu.monday,
                     child: Text(
-                      'Monday',
+                      '${value.length}',
                       style: menuStyle,
                     ),
                   ),
                   PopupMenuItem<Menu>(
-                    value: Menu.tuesday,
+                    value: value.last,
                     child: Text(
                       'Tuesday',
                       style: menuStyle,
                     ),
                   ),
                   PopupMenuItem<Menu>(
-                    value: Menu.thursday,
+                    value: value.single,
                     child: Text(
-                      'Thursday',
+                      '${value.length}',
                       style: menuStyle,
                     ),
                   ),
@@ -66,7 +86,7 @@ class _ListAppState extends State<ListApp> {
                     Text(_selectedMenu),
                     Icon(
                       Icons.keyboard_arrow_down,
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                     )
                   ],
                 ),
