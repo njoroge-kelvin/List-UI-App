@@ -39,7 +39,7 @@ dependencies:
 
   #Firebase authentication dependency
   #firebase_core for connecting to firebase apps
-  #firebase_auth for authentication api
+  #firebase_auth for authentication API
 
   firebase_core: ^1.24.0
   firebase_auth: ^3.11.2
