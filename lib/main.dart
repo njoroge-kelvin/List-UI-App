@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 // import 'package:i_am_trading/MainApp.dart';
-import 'package:i_am_trading/Routes.dart';
+
+import 'Login_Page.dart';
+import 'MainApp.dart';
+import 'Welcome_Screen.dart';
 // import 'Login_Page.dart';
 
 void main() async{
@@ -24,7 +27,9 @@ class MyApp extends StatelessWidget {
       title: 'List UI App',
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
-      routes: customRoutes,
+      routes:   <String, WidgetBuilder>{'/': (context) => Welcome_Screen(),
+    '/login_screen': (context) => Login_Page(),
+    '/home_screen': (context) => ListApp(),}
       // home: DefaultTabController(length: 3, child: ListApp()),
     );
   }

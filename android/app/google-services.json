@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "310811109515",
+    "project_id": "tradinglogin-b8520",
+    "storage_bucket": "tradinglogin-b8520.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:310811109515:android:1b07229383eeec86c14c8e",
+        "android_client_info": {
+          "package_name": "com.trustum.i_am_trading"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "310811109515-u5td1cbog2iv8csdq16v31b7rh3loco3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM_nu6NbBzILXVgfVE306lH1hFDwcRsJQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "310811109515-u5td1cbog2iv8csdq16v31b7rh3loco3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
