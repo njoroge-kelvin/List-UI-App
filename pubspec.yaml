@@ -45,6 +45,7 @@ dependencies:
   firebase_auth: ^3.11.2
   modal_progress_hud: ^0.1.3
   font_awesome_flutter: ^10.2.1
+  modal_progress_hud_nsn: ^0.3.0
 
 dev_dependencies:
   flutter_test:

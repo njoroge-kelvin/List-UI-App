@@ -32,6 +32,7 @@ class _Login_PageState extends State<Login_Page> {
         children: <Widget>[
           Icon(Icons.account_circle_sharp, size: 120, color: Colors.lightBlueAccent,),
           SizedBox(height: 10,),
+          
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: TextField(
