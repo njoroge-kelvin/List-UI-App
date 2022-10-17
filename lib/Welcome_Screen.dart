@@ -19,6 +19,23 @@ const kTextFieldDecoration = InputDecoration(
   ),
 );
 
+SnackBar _snackBar = SnackBar(
+    elevation: 5.0,
+    duration: const Duration(milliseconds: 850),
+    margin: EdgeInsets.all(20),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+    ),
+    behavior: SnackBarBehavior.floating,
+    content: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: const[
+        Icon(Icons.battery_alert),
+        SizedBox(width: 60,),
+        Text('You are Signing up!'),
+      ],
+    ));
+
 class Welcome_Screen extends StatefulWidget {
   const Welcome_Screen({Key? key}) : super(key: key);
 
@@ -39,105 +56,119 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Sign Up'),
+        backgroundColor: Colors.lightBlue,
+      ),
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Form(
           key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  textAlign: TextAlign.center,
-                validator: (value){
-                  if(value!.isEmpty){
-                    return 'Email field is empty';
-                  }
-                  return null;
-                },
-                  onChanged: (value) {
-                    email = value;
-                  },
-
-                  decoration: kTextFieldDecoration.copyWith(
-                      hintText: 'Enter your email'),
-              ),
-              SizedBox(
-                height: 8.0,
-              ),
-              TextFormField(
-                  obscureText: true,
-                  textAlign: TextAlign.center,
-                  controller: _pass,
-                  validator: (value){
-                    if(value != null && value.isEmpty){
-                      return 'The passsword is missing';
-                    }
-                  },
-                  onChanged: (value) {
-                    password = value;
-                  },
-                  decoration: kTextFieldDecoration.copyWith(
-                      hintText: 'Enter your Password')),
-              SizedBox(
-                height: 8.0,
-              ),
-              TextFormField(
-                  obscureText: true,
-                  textAlign: TextAlign.center,
-                  controller: _confirmPass,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 30.0, bottom: 20.0, left: 20.0, right: 20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 0),
+                  child: CircleAvatar(radius: 60,
+                      backgroundImage: AssetImage('assets/images/Image1.jpg')),
+                ),
+                SizedBox(height: 40,),
+                TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    textAlign: TextAlign.center,
                   validator: (value){
                     if(value!.isEmpty){
-                      return 'Password slot is empty';
+                      return 'Email field is empty';
                     }
-                    if(value != _pass.text){
-                      return 'Password doesn\'t match';
-                    }
+                    return null;
                   },
-                  onChanged: (value) {
-                    password = value;
-                  },
+                    onChanged: (value) {
+                      email = value;
+                    },
 
-                  decoration: kTextFieldDecoration.copyWith(
-                      hintText: 'Confirm your Password')),
-              SizedBox(
-                height: 24.0,
-              ),
-              MaterialButton(
-                color: Colors.blueAccent,
-                child:Text( 'Register'),
-                onPressed: () async {
-                  setState(() {
-                    showSpinner = true;
-                  });
-                  try {
-                      if (_formKey.currentState!.validate()){
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('')));
-                        final newUser = await _auth.createUserWithEmailAndPassword(
-                            email: email, password: password);
-                        if(newUser != null) {
-                          Navigator.pushNamed(context, '/login_screen');
-                        }
+                    decoration: kTextFieldDecoration.copyWith(
+                        hintText: 'Enter your email'),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextFormField(
+                    obscureText: true,
+                    textAlign: TextAlign.center,
+                    controller: _pass,
+                    validator: (value){
+                      if(value != null && value.isEmpty){
+                        return 'The passsword is missing';
                       }
+                    },
+                    onChanged: (value) {
+                      password = value;
+                    },
+                    decoration: kTextFieldDecoration.copyWith(
+                        hintText: 'Enter your Password')),
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextFormField(
+                    obscureText: true,
+                    textAlign: TextAlign.center,
+                    controller: _confirmPass,
+                    validator: (value){
+                      if(value!.isEmpty){
+                        return 'Password slot is empty';
+                      }
+                      if(value != _pass.text){
+                        return 'Password doesn\'t match';
+                      }
+                    },
+                    onChanged: (value) {
+                      password = value;
+                    },
 
-                    // if(email.isEmpty || password.isEmpty){
-                    //   print('Sorry! Can\'t login today');
-                    // }
-                    // else{
-                    //   Navigator.pushNamed(context, '/login_screen');
-                    // }
-                  } catch (e) {
-                    print(e);
-                  }
-                  setState(() {
-                    showSpinner = false;
-                  });
-                },
-              )
-            ],
+                    decoration: kTextFieldDecoration.copyWith(
+                        hintText: 'Confirm your Password')),
+                SizedBox(
+                  height: 24.0,
+                ),
+                MaterialButton(
+                  elevation: 5.0,
+                  color: Colors.blueAccent,
+                  child:Text( 'Register'),
+                  onPressed: () async {
+                    setState(() {
+                      showSpinner = true;
+                    });
+                    try {
+                        if (_formKey.currentState!.validate()){
+                          ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+                          final newUser = await _auth.createUserWithEmailAndPassword(
+                              email: email, password: password);
+                          if(newUser != null) {
+                            Navigator.pushNamed(context, '/login_screen');
+                          }
+                        }
+
+                      // if(email.isEmpty || password.isEmpty){
+                      //   print('Sorry! Can\'t login today');
+                      // }
+                      // else{
+                      //   Navigator.pushNamed(context, '/login_screen');
+                      // }
+                    } catch (e) {
+                      print(e);
+                    }
+                    setState(() {
+                      showSpinner = false;
+                    });
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),
