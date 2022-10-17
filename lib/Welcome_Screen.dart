@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:i_am_trading/MainApp.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 const kTextFieldDecoration = InputDecoration(
@@ -28,10 +29,16 @@ class Welcome_Screen extends StatefulWidget {
 
 class _Welcome_ScreenState extends State<Welcome_Screen> {
 
+
   final _auth = FirebaseAuth.instance;
   bool showSpinner = false;
-  late String email;
+  late String email ;
   late String password;
+  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _form = GlobalKey<FormState>();
+  final TextEditingController _pass = TextEditingController();
+  final TextEditingController _confirmPass = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,61 +47,99 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
       resizeToAvoidBottomInset: false,
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              TextField(
-                  keyboardType: TextInputType.emailAddress,
-                  textAlign: TextAlign.center,
-                  onChanged: (value) {
-                    email = value;
-                  },
-                  decoration: kTextFieldDecoration.copyWith(
-                      hintText: 'Enter your email'),
-              ),
-              SizedBox(
-                height: 8.0,
-              ),
-              TextField(
-                  obscureText: true,
-                  textAlign: TextAlign.center,
-                  onChanged: (value) {
-                    password = value;
-                  },
-                  decoration: kTextFieldDecoration.copyWith(
-                      hintText: 'Enter your Password')),
-              SizedBox(
-                height: 24.0,
-              ),
-              MaterialButton(
-                color: Colors.blueAccent,
-                child:Text( 'Register'),
-                onPressed: () async {
-                  setState(() {
-                    showSpinner = true;
-                  });
-                  try {
-                    final newUser = await _auth.createUserWithEmailAndPassword(
-                        email: email, password: password);
-                    if (newUser != null) {
-                      print( 'where you are');
-                      Navigator.pushNamed(context, '/login_screen');
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    textAlign: TextAlign.center,
+                  validator: (value){
+                    if(value != null && value.isEmpty){
+                      return 'Email field is empty';
                     }
-                    // else{
-                    //   Navigator.pushNamed(context, '/login_screen');
-                    // }
-                  } catch (e) {
-                    print(e);
-                  }
-                  setState(() {
-                    showSpinner = false;
-                  });
-                },
-              )
-            ],
+                    return null;
+                  },
+                    onChanged: (value) {
+                      email = value;
+                    },
+
+                    decoration: kTextFieldDecoration.copyWith(
+                        hintText: 'Enter your email'),
+                ),
+                SizedBox(
+                  height: 8.0,
+                ),
+                TextFormField(
+                    obscureText: true,
+                    textAlign: TextAlign.center,
+                    controller: _pass,
+                    validator: (value){
+                      if(value != null && value.isEmpty){
+                        return 'The passsword is missing';
+                      }
+                    },
+                    onChanged: (value) {
+                      password = value;
+                    },
+                    decoration: kTextFieldDecoration.copyWith(
+                        hintText: 'Enter your Password')),
+                TextFormField(
+                    obscureText: true,
+                    textAlign: TextAlign.center,
+                    controller: _confirmPass,
+                    validator: (value){
+                      if(value != null && value.isEmpty){
+                        return 'The passsword is missing';
+                      }
+                    },
+                    onChanged: (value) {
+                      password = value;
+                    },
+
+                    decoration: kTextFieldDecoration.copyWith(
+                        hintText: 'Enter your Password')),
+                SizedBox(
+                  height: 24.0,
+                ),
+                MaterialButton(
+                  color: Colors.blueAccent,
+                  child:Text( 'Register'),
+                  onPressed: () async {
+                    if(password == null && email == null){
+                      return print ('Your first step');
+                    }
+                    setState(() {
+                      showSpinner = true;
+                    });
+                    try {
+                      final newUser = await _auth.createUserWithEmailAndPassword(
+                          email: email, password: password);
+                      if (newUser != null) {
+                        print( 'where you are');
+                        Navigator.pushNamed(context, '/login_screen');
+                      }
+
+                      // if(email.isEmpty || password.isEmpty){
+                      //   print('Sorry! Can\'t login today');
+                      // }
+                      // else{
+                      //   Navigator.pushNamed(context, '/login_screen');
+                      // }
+                    } catch (e) {
+                      print(e);
+                    }
+                    setState(() {
+                      showSpinner = false;
+                    });
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),
