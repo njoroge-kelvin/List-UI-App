@@ -133,39 +133,47 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                     decoration: kTextFieldDecoration.copyWith(
                         hintText: 'Confirm your Password')),
                 SizedBox(
-                  height: 24.0,
+                  height: 44.0,
                 ),
-                MaterialButton(
-                  elevation: 5.0,
-                  color: Colors.blueAccent,
-                  child:Text( 'Register'),
-                  onPressed: () async {
-                    setState(() {
-                      showSpinner = true;
-                    });
-                    try {
-                        if (_formKey.currentState!.validate()){
-                          ScaffoldMessenger.of(context).showSnackBar(_snackBar);
-                          final newUser = await _auth.createUserWithEmailAndPassword(
-                              email: email, password: password);
-                          if(newUser != null) {
-                            Navigator.pushNamed(context, '/login_screen');
-                          }
-                        }
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 0.0),
+                  child: MaterialButton(
+                    padding: EdgeInsets.all(15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    elevation: 5.0,
+                    color: Colors.blueAccent,
+                    child:Text( 'Register'),
+                    onPressed: () async {
 
-                      // if(email.isEmpty || password.isEmpty){
-                      //   print('Sorry! Can\'t login today');
-                      // }
-                      // else{
-                      //   Navigator.pushNamed(context, '/login_screen');
-                      // }
-                    } catch (e) {
-                      print(e);
-                    }
-                    setState(() {
-                      showSpinner = false;
-                    });
-                  },
+                      setState(() {
+                        showSpinner = true;
+                      });
+                      try {
+                          if (_formKey.currentState!.validate()){
+                            ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+                            final newUser = await _auth.createUserWithEmailAndPassword(
+                                email: email, password: password);
+                            if(newUser != null) {
+                              Navigator.pushNamed(context, '/login_screen');
+                            }
+                          }
+
+                        // if(email.isEmpty || password.isEmpty){
+                        //   print('Sorry! Can\'t login today');
+                        // }
+                        // else{
+                        //   Navigator.pushNamed(context, '/login_screen');
+                        // }
+                      } catch (e) {
+                        print(e);
+                      }
+                      setState(() {
+                        showSpinner = false;
+                      });
+                    },
+                  ),
                 )
               ],
             ),
