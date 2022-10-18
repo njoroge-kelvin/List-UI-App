@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 //Represents list of popup menu.
 class Menu {
   const Menu({required this.day});
@@ -13,12 +12,9 @@ final List<Menu> value = <Menu>[
   Menu(day: 'Tuesday'),
   Menu(day: 'Wednesday'),
   Menu(day: 'Thursday'),
-
 ];
 
 const TextStyle menuStyle = TextStyle(color: Colors.black, fontSize: 13.0);
-
-
 
 class MainApp extends StatefulWidget {
   const MainApp({Key? key}) : super(key: key);
@@ -33,8 +29,6 @@ class _MainAppState extends State<MainApp> {
     return ListApp();
   }
 }
-
-
 
 class ListApp extends StatefulWidget {
   const ListApp({Key? key}) : super(key: key);
@@ -51,6 +45,28 @@ class _ListAppState extends State<ListApp> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+          drawer: Drawer(
+            child: ListView(
+              children: <Widget>[
+                DrawerHeader(
+                  decoration: BoxDecoration(color: Colors.lightBlue),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 38.0),
+                    child: Wrap(spacing: 70, children: const <Widget>[
+                      Icon(
+                        Icons.supervised_user_circle_rounded,
+                        size: 40,
+                      ),
+                      Text(
+                        'USER',
+                        style: TextStyle(color: Colors.black87, fontSize: 30),
+                      ),
+                    ]),
+                  ),
+                ),
+              ],
+            ),
+          ),
           appBar: AppBar(
             centerTitle: true,
             title: Text('AppBar'),
@@ -186,10 +202,12 @@ class ItemList extends StatefulWidget {
 class _ItemListState extends State<ItemList> {
   int _selectedIndex = 0;
 
-  _onItemTapped(int index){
-    setState((){
-      _selectedIndex = index;
-    },);
+  _onItemTapped(int index) {
+    setState(
+      () {
+        _selectedIndex = index;
+      },
+    );
   }
 
   @override
@@ -207,21 +225,24 @@ class _ItemListState extends State<ItemList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
                   Icon(Icons.spatial_audio),
-                  Text('This is your profile',),
-                  CircleAvatar(radius: 15,),
+                  Text(
+                    'This is your profile',
+                  ),
+                  CircleAvatar(
+                    radius: 15,
+                  ),
                 ],
               ),
               Text('Lorem Ipsum is simply dummy text of the printing '
                   'and typesetting industry. Lorem Ipsum has been the industrys '
                   'standard dummy text ever since the 1500s, when an unknown printer but also the leap into electronic '
-                  'typesetting, remaining essentially unchanged. It was popularised in the '
-              ),
+                  'typesetting, remaining essentially unchanged. It was popularised in the '),
               BottomNavigationBar(
                 selectedItemColor: Colors.greenAccent,
                 elevation: 1,
                 onTap: _onItemTapped,
-                currentIndex : _selectedIndex,
-                items: const[
+                currentIndex: _selectedIndex,
+                items: const [
                   BottomNavigationBarItem(
                     icon: Icon(Icons.home),
                     label: 'Home',
@@ -234,7 +255,8 @@ class _ItemListState extends State<ItemList> {
                     icon: Icon(Icons.school),
                     label: 'School',
                   ),
-                ],)
+                ],
+              )
             ],
           ),
         ),
