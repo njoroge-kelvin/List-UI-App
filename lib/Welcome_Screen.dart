@@ -29,9 +29,11 @@ SnackBar _snackBar = SnackBar(
     behavior: SnackBarBehavior.floating,
     content: Row(
       mainAxisAlignment: MainAxisAlignment.start,
-      children: const[
+      children: const [
         Icon(Icons.battery_alert),
-        SizedBox(width: 60,),
+        SizedBox(
+          width: 60,
+        ),
         Text('You are Signing up!'),
       ],
     ));
@@ -44,10 +46,9 @@ class Welcome_Screen extends StatefulWidget {
 }
 
 class _Welcome_ScreenState extends State<Welcome_Screen> {
-
   final _auth = FirebaseAuth.instance;
   bool showSpinner = false;
-  late String email = '' ;
+  late String email = '';
   late String password = '';
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _pass = TextEditingController();
@@ -67,32 +68,54 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
         child: Form(
           key: _formKey,
           child: Padding(
-            padding: const EdgeInsets.only(top: 30.0, bottom: 20.0, left: 20.0, right: 20.0),
+            padding: const EdgeInsets.only(
+                top: 30.0, bottom: 20.0, left: 20.0, right: 20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top: 0),
-                  child: CircleAvatar(radius: 60,
-                      backgroundImage: AssetImage('assets/images/Image1.jpg')),
+                    Stack(
+                      children: [
+                    CircleAvatar(
+                      minRadius: 50,
+                      backgroundImage:
+                      AssetImage("assets/images/Image1.jpg"),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 110,
+                      child: MaterialButton(
+                    height: 40,
+                    minWidth: 40,
+                    padding: EdgeInsets.only(left: 1, top: 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      side: BorderSide(color: Colors.white),
+                    ),
+                    color: Color(0xFFF5F6F9),
+                    onPressed: () {
+
+                    },
+                    child: Icon(Icons.camera_alt_outlined),
+                      ),
+                    ),],),
+                SizedBox(
+                  height: 40,
                 ),
-                SizedBox(height: 40,),
                 TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    textAlign: TextAlign.center,
-                  validator: (value){
-                    if(value!.isEmpty){
+                  keyboardType: TextInputType.emailAddress,
+                  textAlign: TextAlign.center,
+                  validator: (value) {
+                    if (value!.isEmpty) {
                       return 'Email field is empty';
                     }
                     return null;
                   },
-                    onChanged: (value) {
-                      email = value;
-                    },
-
-                    decoration: kTextFieldDecoration.copyWith(
-                        hintText: 'Enter your email'),
+                  onChanged: (value) {
+                    email = value;
+                  },
+                  decoration: kTextFieldDecoration.copyWith(
+                      hintText: 'Enter your email'),
                 ),
                 SizedBox(
                   height: 20.0,
@@ -101,8 +124,8 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                     obscureText: true,
                     textAlign: TextAlign.center,
                     controller: _pass,
-                    validator: (value){
-                      if(value != null && value.isEmpty){
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
                         return 'The passsword is missing';
                       }
                     },
@@ -118,25 +141,25 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                     obscureText: true,
                     textAlign: TextAlign.center,
                     controller: _confirmPass,
-                    validator: (value){
-                      if(value!.isEmpty){
+                    validator: (value) {
+                      if (value!.isEmpty) {
                         return 'Password slot is empty';
                       }
-                      if(value != _pass.text){
+                      if (value != _pass.text) {
                         return 'Password doesn\'t match';
                       }
                     },
                     onChanged: (value) {
                       password = value;
                     },
-
                     decoration: kTextFieldDecoration.copyWith(
                         hintText: 'Confirm your Password')),
                 SizedBox(
                   height: 44.0,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 0.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 40.0, vertical: 0.0),
                   child: MaterialButton(
                     padding: EdgeInsets.all(15),
                     shape: RoundedRectangleBorder(
@@ -144,21 +167,21 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                     ),
                     elevation: 5.0,
                     color: Colors.blueAccent,
-                    child:Text( 'Register'),
+                    child: Text('Register'),
                     onPressed: () async {
-
                       setState(() {
                         showSpinner = true;
                       });
                       try {
-                          if (_formKey.currentState!.validate()){
-                            ScaffoldMessenger.of(context).showSnackBar(_snackBar);
-                            final newUser = await _auth.createUserWithEmailAndPassword(
-                                email: email, password: password);
-                            if(newUser != null) {
-                              Navigator.pushNamed(context, '/login_screen');
-                            }
+                        if (_formKey.currentState!.validate()) {
+                          ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+                          final newUser =
+                              await _auth.createUserWithEmailAndPassword(
+                                  email: email, password: password);
+                          if (newUser != null) {
+                            Navigator.pushNamed(context, '/login_screen');
                           }
+                        }
 
                         // if(email.isEmpty || password.isEmpty){
                         //   print('Sorry! Can\'t login today');

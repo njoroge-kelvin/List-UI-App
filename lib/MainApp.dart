@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 //Represents list of popup menu.
 class Menu {
-  const Menu({required this.day});
-
   final String day;
+
+  const Menu({required this.day});
 }
 
 final List<Menu> value = <Menu>[
@@ -13,6 +13,9 @@ final List<Menu> value = <Menu>[
   Menu(day: 'Wednesday'),
   Menu(day: 'Thursday'),
 ];
+
+// final _newList = List<int>.generate(100, (i) => i + 10);
+
 
 const TextStyle menuStyle = TextStyle(color: Colors.black, fontSize: 13.0);
 
@@ -43,7 +46,7 @@ class _ListAppState extends State<ListApp> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
           drawer: Drawer(
             child: ListView(
@@ -64,6 +67,7 @@ class _ListAppState extends State<ListApp> {
                     ]),
                   ),
                 ),
+                ListTile()
               ],
             ),
           ),
@@ -78,6 +82,7 @@ class _ListAppState extends State<ListApp> {
                     setState(() {
                       _selectedMenu = value.day;
                     });
+                    //     ),),
                   },
                   itemBuilder: (BuildContext context) => <PopupMenuItem<Menu>>[
                     PopupMenuItem<Menu>(
@@ -118,9 +123,23 @@ class _ListAppState extends State<ListApp> {
               Tab(
                 icon: Icon(size: 20.0, Icons.accessible_forward_rounded),
               ),
+              Tab(
+                icon: Icon(size: 20.0, Icons.library_add_check_outlined),
+              ),
             ]),
           ),
           body: TabBarView(children: [
+
+            ListView(scrollDirection: Axis.vertical, children: [
+              for (var i = 0; i < 101; i++)
+                Container(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Center(child: Text('Item $i')),
+                  ),
+                ),
+            ]),
             ListView(scrollDirection: Axis.vertical, children: [
               for (var i = 0; i < 101; i++)
                 Column(
@@ -141,16 +160,6 @@ class _ListAppState extends State<ListApp> {
                       ),
                     ),
                   ],
-                ),
-            ]),
-            ListView(scrollDirection: Axis.vertical, children: [
-              for (var i = 0; i < 101; i++)
-                Container(
-                  color: Colors.white,
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Center(child: Text('Item $i')),
-                  ),
                 ),
             ]),
             ListView(scrollDirection: Axis.vertical, children: [
@@ -186,7 +195,12 @@ class _ListAppState extends State<ListApp> {
                     ),
                   ),
                 ),
-            ])
+            ]),
+            ListView.builder(
+                itemCount: 100,
+                itemBuilder: (context, index) => ListTile(
+                  leading: Icon(Icons.add_alarm_outlined),
+                  title: Text('Today is Monday'),),),
           ])),
     );
   }
