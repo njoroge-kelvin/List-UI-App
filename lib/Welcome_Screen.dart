@@ -9,12 +9,8 @@ const kTextFieldDecoration = InputDecoration(
   border: OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
-  enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.5),
-    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-  ),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 3.0),
+    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.5),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );
@@ -56,9 +52,12 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign Up'),
+        title: Center(child: Text('Sign Up')),
         backgroundColor: Colors.lightBlue,
       ),
       backgroundColor: Colors.white,
@@ -74,31 +73,30 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                    Stack(
-                      children: [
+                Stack(
+                  children: [
                     CircleAvatar(
                       minRadius: 50,
-                      backgroundImage:
-                      AssetImage("assets/images/Image1.jpg"),
+                      backgroundImage: AssetImage("assets/images/Image1.jpg"),
                     ),
                     Positioned(
-                      bottom: 0,
-                      right: 110,
+                      bottom: height * 0,
+                      right: width * 0.28,
                       child: MaterialButton(
-                    height: 40,
-                    minWidth: 40,
-                    padding: EdgeInsets.only(left: 1, top: 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      side: BorderSide(color: Colors.white),
-                    ),
-                    color: Color(0xFFF5F6F9),
-                    onPressed: () {
-
-                    },
-                    child: Icon(Icons.camera_alt_outlined),
+                        height: 40,
+                        minWidth: 40,
+                        padding: EdgeInsets.only(left: 1, top: 1),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                          side: BorderSide(color: Colors.white),
+                        ),
+                        color: Color(0xFFF5F6F9),
+                        onPressed: () {},
+                        child: Icon(Icons.camera_alt_outlined),
                       ),
-                    ),],),
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: 40,
                 ),
@@ -118,7 +116,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                       hintText: 'Enter your email'),
                 ),
                 SizedBox(
-                  height: 20.0,
+                  height: 30.0,
                 ),
                 TextFormField(
                     obscureText: true,
@@ -126,7 +124,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                     controller: _pass,
                     validator: (value) {
                       if (value != null && value.isEmpty) {
-                        return 'The passsword is missing';
+                        return 'The password is missing';
                       }
                     },
                     onChanged: (value) {
@@ -135,7 +133,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                     decoration: kTextFieldDecoration.copyWith(
                         hintText: 'Enter your Password')),
                 SizedBox(
-                  height: 20.0,
+                  height: 30.0,
                 ),
                 TextFormField(
                     obscureText: true,
@@ -159,15 +157,18 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 40.0, vertical: 0.0),
+                      horizontal: 50.0, vertical: 0.0),
                   child: MaterialButton(
                     padding: EdgeInsets.all(15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                     elevation: 5.0,
-                    color: Colors.blueAccent,
-                    child: Text('Register'),
+                    color: Color(0xFF80d8ff),
+                    child: Text(
+                      'Register',
+                      style: TextStyle(fontSize: 13),
+                    ),
                     onPressed: () async {
                       setState(() {
                         showSpinner = true;
@@ -197,7 +198,50 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                       });
                     },
                   ),
-                )
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 30.0),
+                  child: Row(
+                    children: const [
+                      Expanded(
+                        child: Divider(
+                          indent: 10,
+                          endIndent: 10,
+                          height: 10,
+                          thickness: 0.8,
+                        ),
+                      ),
+                      Text('Or Sign Up with'),
+                      Expanded(
+                        child: Divider(
+                          indent: 10,
+                          endIndent: 10,
+                          height: 10,
+                          thickness: 0.8,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width:40,
+                        height:40,
+                        child: Image.network(
+                            'http://pngimg.com/uploads/google/google_PNG19635.png',
+                            fit:BoxFit.cover
+                        ),
+                      ),
+                      Icon(Icons.add_alarm_outlined),
+                      Icon(Icons.add_chart_sharp),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
