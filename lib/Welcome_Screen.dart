@@ -1,5 +1,10 @@
+
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 const kTextFieldDecoration = InputDecoration(
@@ -49,6 +54,18 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _pass = TextEditingController();
   final TextEditingController _confirmPass = TextEditingController();
+  File? image;
+
+  Future pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if(image == null) return;
+      final imageTemp = File(image.path);
+      setState(() => this.image = imageTemp);
+    } on PlatformException catch(e) {
+      print('Failed to pick image: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +85,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
           key: _formKey,
           child: Padding(
             padding: const EdgeInsets.only(
-                top: 30.0, bottom: 20.0, left: 20.0, right: 20.0),
+                top: 20.0, bottom: 10.0, left: 20.0, right: 20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -77,7 +94,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                   children: [
                     CircleAvatar(
                       minRadius: 50,
-                      backgroundImage: AssetImage("assets/images/Image1.jpg"),
+                      backgroundImage: AssetImage(" $image"),
                     ),
                     Positioned(
                       bottom: height * 0,
@@ -91,7 +108,9 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                           side: BorderSide(color: Colors.white),
                         ),
                         color: Color(0xFFF5F6F9),
-                        onPressed: () {},
+                        onPressed: () {
+                          pickImage();
+                        },
                         child: Icon(Icons.camera_alt_outlined),
                       ),
                     ),
@@ -116,7 +135,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                       hintText: 'Enter your email'),
                 ),
                 SizedBox(
-                  height: 30.0,
+                  height: 10.0,
                 ),
                 TextFormField(
                     obscureText: true,
@@ -133,7 +152,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                     decoration: kTextFieldDecoration.copyWith(
                         hintText: 'Enter your Password')),
                 SizedBox(
-                  height: 30.0,
+                  height: 10.0,
                 ),
                 TextFormField(
                     obscureText: true,
@@ -153,7 +172,47 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                     decoration: kTextFieldDecoration.copyWith(
                         hintText: 'Confirm your Password')),
                 SizedBox(
-                  height: 44.0,
+                  height: 10.0,
+                ),
+                TextFormField(
+                    obscureText: true,
+                    textAlign: TextAlign.center,
+                    controller: _confirmPass,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Password slot is empty';
+                      }
+                      if (value != _pass.text) {
+                        return 'Password doesn\'t match';
+                      }
+                    },
+                    onChanged: (value) {
+                      password = value;
+                    },
+                    decoration: kTextFieldDecoration.copyWith(
+                        hintText: 'Confirm your Password')),
+                SizedBox(
+                  height: 10.0,
+                ),
+                TextFormField(
+                    obscureText: true,
+                    textAlign: TextAlign.center,
+                    controller: _confirmPass,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Password slot is empty';
+                      }
+                      if (value != _pass.text) {
+                        return 'Password doesn\'t match';
+                      }
+                    },
+                    onChanged: (value) {
+                      password = value;
+                    },
+                    decoration: kTextFieldDecoration.copyWith(
+                        hintText: 'Confirm your Password')),
+                SizedBox(
+                  height: 34.0,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
