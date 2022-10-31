@@ -10,14 +10,14 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 const kTextFieldDecoration = InputDecoration(
   hintText: 'Enter a value',
   hintStyle: TextStyle(color: Colors.grey),
-  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-  border: OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-  ),
-  focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.5),
-    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-  ),
+  contentPadding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 5.0),
+  // border: OutlineInputBorder(
+  //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
+  // ),
+  // focusedBorder: OutlineInputBorder(
+  //   borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.5),
+  //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
+  // ),
 );
 
 SnackBar _snackBar = SnackBar(
@@ -54,18 +54,21 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _pass = TextEditingController();
   final TextEditingController _confirmPass = TextEditingController();
+  final TextEditingController _phoneNumber = TextEditingController();
+  final TextEditingController _username = TextEditingController();
   File? image;
+  final picker = ImagePicker();
 
-  Future pickImage() async {
-    try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if(image == null) return;
-      final imageTemp = File(image.path);
-      setState(() => this.image = imageTemp);
-    } on PlatformException catch(e) {
-      print('Failed to pick image: $e');
-    }
-  }
+  // Future pickImage() async {
+  //   try {
+  //     final image = await picker.pickImage(source: ImageSource.gallery);
+  //     if(image == null) return;
+  //     final imageTemp = File(image.path);
+  //     setState(() => this.image = imageTemp);
+  //   } on PlatformException catch(e) {
+  //     print('Failed to pick image: $e');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -83,22 +86,21 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
         inAsyncCall: showSpinner,
         child: Form(
           key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.only(
-                top: 20.0, bottom: 10.0, left: 20.0, right: 20.0),
+          child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Stack(
+                  alignment: AlignmentDirectional.center,
                   children: [
                     CircleAvatar(
                       minRadius: 50,
-                      backgroundImage: AssetImage(" $image"),
+                      backgroundImage: AssetImage("assets/images/Image1.jpg"),
                     ),
                     Positioned(
                       bottom: height * 0,
-                      right: width * 0.28,
+                      right: width * 0.32,
                       child: MaterialButton(
                         height: 40,
                         minWidth: 40,
@@ -109,7 +111,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                         ),
                         color: Color(0xFFF5F6F9),
                         onPressed: () {
-                          pickImage();
+                          // pickImage();
                         },
                         child: Icon(Icons.camera_alt_outlined),
                       ),
@@ -119,98 +121,86 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                 SizedBox(
                   height: 40,
                 ),
-                TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  textAlign: TextAlign.center,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Email field is empty';
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {
-                    email = value;
-                  },
-                  decoration: kTextFieldDecoration.copyWith(
-                      hintText: 'Enter your email'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Column(children: [TextFormField(
+                    textAlignVertical: TextAlignVertical.center,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Email field is empty';
+                        }
+                        return null;
+                      },
+                      decoration: kTextFieldDecoration.copyWith(
+                          hintText: 'Enter your email',
+                          prefixIcon: Icon(Icons.email) ),
+                    ),
+                  SizedBox(height: 10,),
+                  TextFormField(
+                        textAlignVertical: TextAlignVertical.center,
+                        obscureText: true,
+                        controller: _phoneNumber,
+                        validator: (value) {
+                          if (value != null && value.isEmpty) {
+                            return 'Enter you Phone number';
+                          }
+                        },
+                        decoration: kTextFieldDecoration.copyWith(
+                            hintText: 'Enter your Phone No.',
+                            prefixIcon: Icon(Icons.phone))),
+                  SizedBox(height: 10,),
+                  TextFormField(
+                        textAlignVertical: TextAlignVertical.center,
+                        obscureText: true,
+                        controller: _username,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Username slot is empty';
+                          }
+                        },
+                        decoration: kTextFieldDecoration.copyWith(
+                            hintText: 'Input Username',
+                            prefixIcon: Icon(Icons.mouse_rounded))),
+                  SizedBox(height: 10,),
+                  TextFormField(
+                        textAlignVertical: TextAlignVertical.center,
+                        obscureText: true,
+                        controller: _pass,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Password slot is empty';
+                          }
+                          if (value != _pass.text) {
+                            return 'Password doesn\'t match';
+                          }
+                        },
+                        onChanged: (value) {
+                          password = value;
+                        },
+                        decoration: kTextFieldDecoration.copyWith(
+                            hintText: 'Enter Password',
+                            prefixIcon: Icon(Icons.account_box_rounded),)),
+                  SizedBox(height: 10,),
+                  TextFormField(
+                        textAlignVertical: TextAlignVertical.center,
+                        obscureText: true,
+                        controller: _confirmPass,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Password slot is empty';
+                          }
+                          if (value != _pass.text) {
+                            return 'Password doesn\'t match';
+                          }
+                        },
+                        onChanged: (value) {
+                          password = value;
+                        },
+                        decoration: kTextFieldDecoration.copyWith(
+                            hintText: 'Confirm Password',
+                            prefixIcon: Icon(Icons.add_alarm_outlined),)),]),
                 ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                TextFormField(
-                    obscureText: true,
-                    textAlign: TextAlign.center,
-                    controller: _pass,
-                    validator: (value) {
-                      if (value != null && value.isEmpty) {
-                        return 'The password is missing';
-                      }
-                    },
-                    onChanged: (value) {
-                      password = value;
-                    },
-                    decoration: kTextFieldDecoration.copyWith(
-                        hintText: 'Enter your Password')),
-                SizedBox(
-                  height: 10.0,
-                ),
-                TextFormField(
-                    obscureText: true,
-                    textAlign: TextAlign.center,
-                    controller: _confirmPass,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Password slot is empty';
-                      }
-                      if (value != _pass.text) {
-                        return 'Password doesn\'t match';
-                      }
-                    },
-                    onChanged: (value) {
-                      password = value;
-                    },
-                    decoration: kTextFieldDecoration.copyWith(
-                        hintText: 'Confirm your Password')),
-                SizedBox(
-                  height: 10.0,
-                ),
-                TextFormField(
-                    obscureText: true,
-                    textAlign: TextAlign.center,
-                    controller: _confirmPass,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Password slot is empty';
-                      }
-                      if (value != _pass.text) {
-                        return 'Password doesn\'t match';
-                      }
-                    },
-                    onChanged: (value) {
-                      password = value;
-                    },
-                    decoration: kTextFieldDecoration.copyWith(
-                        hintText: 'Confirm your Password')),
-                SizedBox(
-                  height: 10.0,
-                ),
-                TextFormField(
-                    obscureText: true,
-                    textAlign: TextAlign.center,
-                    controller: _confirmPass,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Password slot is empty';
-                      }
-                      if (value != _pass.text) {
-                        return 'Password doesn\'t match';
-                      }
-                    },
-                    onChanged: (value) {
-                      password = value;
-                    },
-                    decoration: kTextFieldDecoration.copyWith(
-                        hintText: 'Confirm your Password')),
                 SizedBox(
                   height: 34.0,
                 ),
