@@ -80,6 +80,11 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    ThemeData theme = ThemeData(
+      colorScheme: ColorScheme.fromSwatch(
+        primarySwatch: Colors.lightBlue
+      )
+    );
 
 
     return Scaffold(
@@ -179,7 +184,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                         },
                         decoration: kTextFieldDecoration.copyWith(
                             hintText: 'Input Username',
-                            prefixIcon: Icon(Icons.mouse_rounded))),
+                            prefixIcon: IconTheme(data: IconThemeData(color: ), child: Icon(Icons.nest_cam_wired_stand_outlined)))),
                   SizedBox(height: 10,),
                   TextFormField(
                     cursorColor: Colors.lightBlueAccent,
