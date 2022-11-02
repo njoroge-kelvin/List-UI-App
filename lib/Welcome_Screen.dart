@@ -14,10 +14,10 @@ const kTextFieldDecoration = InputDecoration(
   // border: OutlineInputBorder(
   //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
   // ),
-  // focusedBorder: OutlineInputBorder(
-  //   borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.5),
-  //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
-  // ),
+  focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.5),
+    borderRadius: BorderRadius.all(Radius.circular(32.0)),
+  ),
 );
 
 SnackBar _snackBar = SnackBar(
@@ -59,6 +59,12 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
   File? image;
   final picker = ImagePicker();
 
+  @override
+  void dispose(){
+    _pass.dispose();
+    super.dispose();
+  }
+
   // Future pickImage() async {
   //   try {
   //     final image = await picker.pickImage(source: ImageSource.gallery);
@@ -75,14 +81,18 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
+
     return Scaffold(
-      appBar: AppBar(
-        title: Center(child: Text('Sign Up')),
-        backgroundColor: Colors.lightBlue,
-      ),
+      // appBar: AppBar(
+      //   title: Center(child: Text('Sign Up', style: TextStyle(color: Colors.lightBlueAccent, fontSize: 30),)),
+      //   backgroundColor: Colors.white,
+      //   elevation: 0,
+      // ),
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
-      body: ModalProgressHUD(
+      body:
+      //Implements progressSpinner on this context
+      ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Form(
           key: _formKey,
@@ -91,35 +101,40 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Stack(
-                  alignment: AlignmentDirectional.center,
-                  children: [
-                    CircleAvatar(
-                      minRadius: 50,
-                      backgroundImage: AssetImage("assets/images/Image1.jpg"),
-                    ),
-                    Positioned(
-                      bottom: height * 0,
-                      right: width * 0.32,
-                      child: MaterialButton(
-                        height: 40,
-                        minWidth: 40,
-                        padding: EdgeInsets.only(left: 1, top: 1),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          side: BorderSide(color: Colors.white),
-                        ),
-                        color: Color(0xFFF5F6F9),
-                        onPressed: () {
-                          // pickImage();
-                        },
-                        child: Icon(Icons.camera_alt_outlined),
+                Padding(
+                  padding: const EdgeInsets.only(top: 58.0),
+                  child: Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      CircleAvatar(
+                        minRadius: 50,
+                        backgroundImage: AssetImage("assets/images/Image1.jpg"),
                       ),
-                    ),
-                  ],
+                      Positioned(
+                        bottom: height * 0,
+                        right: width * 0.32,
+                        child: MaterialButton(
+                          height: 40,
+                          minWidth: 40,
+                          padding: EdgeInsets.only(left: 1, top: 1),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                            side: BorderSide(color: Colors.white),
+                          ),
+                          color: Color(0xFFF5F6F9),
+                          onPressed: () {
+                            // pickImage();
+                          },
+                          child: Icon(Icons.camera_alt_outlined),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+                SizedBox(height: 30,),
+                Center(child: Text('Sign Up', style: TextStyle(color: Colors.lightBlueAccent, fontSize: 30),)),
                 SizedBox(
-                  height: 40,
+                  height: 30,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -132,6 +147,9 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                         }
                         return null;
                       },
+                      onChanged: (value){
+                      email = value;
+                      },
                       decoration: kTextFieldDecoration.copyWith(
                           hintText: 'Enter your email',
                           prefixIcon: Icon(Icons.email) ),
@@ -139,7 +157,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                   SizedBox(height: 10,),
                   TextFormField(
                         textAlignVertical: TextAlignVertical.center,
-                        obscureText: true,
+                        obscureText: false,
                         controller: _phoneNumber,
                         validator: (value) {
                           if (value != null && value.isEmpty) {
@@ -152,7 +170,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                   SizedBox(height: 10,),
                   TextFormField(
                         textAlignVertical: TextAlignVertical.center,
-                        obscureText: true,
+                        obscureText: false,
                         controller: _username,
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -164,6 +182,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                             prefixIcon: Icon(Icons.mouse_rounded))),
                   SizedBox(height: 10,),
                   TextFormField(
+                    cursorColor: Colors.lightBlueAccent,
                         textAlignVertical: TextAlignVertical.center,
                         obscureText: true,
                         controller: _pass,
@@ -180,7 +199,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                         },
                         decoration: kTextFieldDecoration.copyWith(
                             hintText: 'Enter Password',
-                            prefixIcon: Icon(Icons.account_box_rounded),)),
+                            prefixIcon: Icon(Icons.account_box_rounded,),)),
                   SizedBox(height: 10,),
                   TextFormField(
                         textAlignVertical: TextAlignVertical.center,
