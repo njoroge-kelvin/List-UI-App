@@ -14,10 +14,10 @@ const kTextFieldDecoration = InputDecoration(
   // border: OutlineInputBorder(
   //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
   // ),
-  focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.5),
-    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-  ),
+  // focusedBorder: OutlineInputBorder(
+  //   borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.5),
+  //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
+  // ),
 );
 
 SnackBar _snackBar = SnackBar(
@@ -60,6 +60,11 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
   final picker = ImagePicker();
 
   @override
+  void initState(){
+    super.initState();
+  }
+
+  @override
   void dispose(){
     _pass.dispose();
     super.dispose();
@@ -93,7 +98,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
       //   backgroundColor: Colors.white,
       //   elevation: 0,
       // ),
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       body:
       //Implements progressSpinner on this context
@@ -124,7 +129,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                           padding: EdgeInsets.only(left: 1, top: 1),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50),
-                            side: BorderSide(color: Colors.white),
+                            // side: BorderSide(color: Colors.white),
                           ),
                           color: Color(0xFFF5F6F9),
                           onPressed: () {
@@ -137,7 +142,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                   ),
                 ),
                 SizedBox(height: 30,),
-                Center(child: Text('Sign Up', style: TextStyle(color: Colors.lightBlueAccent, fontSize: 30),)),
+                Center(child: Text('Sign Up', style: TextStyle( fontSize: 30),)),
                 SizedBox(
                   height: 30,
                 ),
@@ -184,10 +189,10 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                         },
                         decoration: kTextFieldDecoration.copyWith(
                             hintText: 'Input Username',
-                            prefixIcon: IconTheme(data: IconThemeData(color: ), child: Icon(Icons.nest_cam_wired_stand_outlined)))),
+                            prefixIcon: Icon(Icons.nest_cam_wired_stand_outlined))),
                   SizedBox(height: 10,),
                   TextFormField(
-                    cursorColor: Colors.lightBlueAccent,
+                    // cursorColor: Colors.lightBlueAccent,
                         textAlignVertical: TextAlignVertical.center,
                         obscureText: true,
                         controller: _pass,
@@ -226,7 +231,27 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                             prefixIcon: Icon(Icons.add_alarm_outlined),)),]),
                 ),
                 SizedBox(
-                  height: 34.0,
+                  height: 20.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 50.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text('Aready have an account?'),
+                      Theme(
+                        data: Theme.of(context).copyWith(splashColor: Colors.transparent),
+                        child: MaterialButton(
+                          padding: EdgeInsets.zero,
+                          minWidth: 0,
+                          elevation: 0,
+                          child: Text('Sign in', style: TextStyle(color: Colors.green),),
+                          onPressed: (){
+                            Navigator.pushNamed(context, '/login_screen');
+                          }),
+                      )
+                    ],
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
@@ -237,7 +262,8 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     elevation: 5.0,
-                    color: Color(0xFF80d8ff),
+                    // color: Color(0xFF80d8ff),
+                    // color: Color(0xFF76FF03),
                     child: Text(
                       'Register',
                       style: TextStyle(fontSize: 13),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 // import 'package:i_am_trading/MainApp.dart';
 
 import 'Login_Page.dart';
@@ -8,11 +9,15 @@ import 'Welcome_Screen.dart';
 // import 'Login_Page.dart';
 
 void main() async{
+
   // Firebase asynchronous initialization when app is started
   WidgetsFlutterBinding.ensureInitialized();
-  //Waiting for firebase to start ints instance using the async
+  //Waiting for firebase to instantiate using the async
   // and await futures.
   await Firebase.initializeApp();
+
+  //Removes system statusBar
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
 
   runApp(MyApp());
 }
@@ -23,7 +28,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.red,),
+      theme: ThemeData(
+        primarySwatch: Colors.green),
       title: 'List UI App',
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
