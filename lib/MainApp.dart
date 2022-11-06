@@ -14,8 +14,7 @@ final List<Menu> value = <Menu>[
   Menu(day: 'Thursday'),
 ];
 
-// final _newList = List<int>.generate(100, (i) => i + 10);
-
+List items = List.generate(100, (index) => 'item: $index');
 
 const TextStyle menuStyle = TextStyle(color: Colors.black, fontSize: 13.0);
 
@@ -42,7 +41,6 @@ class ListApp extends StatefulWidget {
 }
 
 class _ListAppState extends State<ListApp> {
-  String _selectedMenu = '';
 
 
   @override
@@ -76,48 +74,9 @@ class _ListAppState extends State<ListApp> {
           appBar: AppBar(
             centerTitle: true,
             title: Text('AppBar'),
-            bottom: TabBar(tabs: [
+            bottom: TabBar(tabs: const[
               Tab(
                 icon: Icon(size: 20.0, Icons.account_balance_rounded),
-                child: PopupMenuButton(
-                  onSelected: (Menu value) {
-                    setState(() {
-                      _selectedMenu = value.day;
-                    });
-                    //     ),),
-                  },
-                  itemBuilder: (BuildContext context) => <PopupMenuItem<Menu>>[
-                    PopupMenuItem<Menu>(
-                      child: Text(
-                        '${value.length}',
-                        style: menuStyle,
-                      ),
-                    ),
-                    PopupMenuItem<Menu>(
-                      value: value.last,
-                      child: Text(
-                        'Tuesday',
-                        style: menuStyle,
-                      ),
-                    ),
-                    PopupMenuItem<Menu>(
-                      value: value.single,
-                      child: Text(
-                        '${value.length}',
-                        style: menuStyle,
-                      ),
-                    ),
-                  ],
-                  child: Row(
-                    children: [
-                      Text(_selectedMenu),
-                      Icon(
-                        Icons.keyboard_arrow_down,
-                        color: Theme.of(context).primaryColor,
-                      )
-                    ],
-                  ),
-                ),
               ),
               Tab(
                 icon: Icon(size: 20.0, Icons.add_call),
@@ -132,38 +91,50 @@ class _ListAppState extends State<ListApp> {
           ),
           body: TabBarView(children: [
 
-            ListView(scrollDirection: Axis.vertical, children: [
-              for (var i = 0; i < 101; i++)
+            ListView.builder(
+                itemCount: 100,
+                prototypeItem: ListTile(leading: Icon(Icons.accessibility_rounded), trailing: Icon(Icons.airplane_ticket_rounded),title: Text(items.first),),
+                itemBuilder: (context, index){
+                  return ListTile(title: Text(items[index]),);
+                }),
+            Column(
+              children: [
                 Container(
-                  color: Colors.white,
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Center(child: Text('Item $i')),
-                  ),
-                ),
-            ]),
-            ListView(scrollDirection: Axis.vertical, children: [
-              for (var i = 0; i < 101; i++)
-                Column(
-                  children: [
-                    SizedBox(
-                      height: 5.0,
-                    ),
-                    Container(
-                      color: Colors.green,
-                      child: Column(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  width: MediaQuery.of(context).size.width,
+                  height: 130,
+                  color: Colors.lightGreen,
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(_selectedMenu),
-                          Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: Center(child: Text('Item $i')),
-                          ),
+                          Container(
+                              decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(50)),
+                              padding: EdgeInsets.all(5),
+                              child: Icon(Icons.search)),
+                          CircleAvatar(backgroundColor: Colors.black,)
                         ],
                       ),
-                    ),
-                  ],
-                ),
-            ]),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: const[
+                          Text('Hello Gabby'),
+                        ],
+                      ),
+                      SizedBox(height: 10,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: const[
+                          Text('Choose your Bike', style: TextStyle(fontSize: 20, color: Colors.black87),)
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
             ListView(scrollDirection: Axis.vertical, children: [
               for (var i = 0; i < 101; i++)
                 Padding(
