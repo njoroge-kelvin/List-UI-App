@@ -253,53 +253,49 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 50.0, vertical: 0.0),
-                  child: MaterialButton(
-                    padding: EdgeInsets.all(15),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    elevation: 5.0,
-                    // color: Color(0xFF80d8ff),
-                    // color: Color(0xFF76FF03),
-                    child: Text(
-                      'Register',
-                      style: TextStyle(fontSize: 13),
-                    ),
-                    onPressed: () async {
-                      setState(() {
-                        showSpinner = true;
-                      });
-                      try {
-                        if (_formKey.currentState!.validate()) {
-                          ScaffoldMessenger.of(context).showSnackBar(_snackBar);
-                          final newUser =
-                              await _auth.createUserWithEmailAndPassword(
-                                  email: email, password: password);
-                          if (newUser != null) {
-                            Navigator.pushNamed(context, '/login_screen');
-                          }
-                        }
-
-                        // if(email.isEmpty || password.isEmpty){
-                        //   print('Sorry! Can\'t login today');
-                        // }
-                        // else{
-                        //   Navigator.pushNamed(context, '/login_screen');
-                        // }
-                      } catch (e) {
-                        print(e);
-                      }
-                      setState(() {
-                        showSpinner = false;
-                      });
-                    },
+                MaterialButton(
+                  padding: EdgeInsets.symmetric(horizontal: 100, vertical: 13),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
                   ),
+                  elevation: 3.0,
+                  color: Color(0xffe6f5fc),
+                  // color: Color(0xFF76FF03),
+                  child: Text(
+                    'Register',
+                    style: TextStyle(fontSize: 13),
+                  ),
+                  onPressed: () async {
+                    setState(() {
+                      showSpinner = true;
+                    });
+                    try {
+                      if (_formKey.currentState!.validate()) {
+                        ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+                        final newUser =
+                            await _auth.createUserWithEmailAndPassword(
+                                email: email, password: password);
+                        if (newUser != null) {
+                          Navigator.pushNamed(context, '/login_screen');
+                        }
+                      }
+
+                      // if(email.isEmpty || password.isEmpty){
+                      //   print('Sorry! Can\'t login today');
+                      // }
+                      // else{
+                      //   Navigator.pushNamed(context, '/login_screen');
+                      // }
+                    } catch (e) {
+                      print(e);
+                    }
+                    setState(() {
+                      showSpinner = false;
+                    });
+                  },
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 30.0),
+                  padding: const EdgeInsets.only(top: 20.0),
                   child: Row(
                     children: const [
                       Expanded(

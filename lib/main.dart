@@ -17,7 +17,7 @@ void main() async{
   await Firebase.initializeApp();
 
   //Removes system statusBar
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
   runApp(MyApp());
 }
