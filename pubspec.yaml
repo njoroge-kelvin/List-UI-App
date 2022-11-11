@@ -41,8 +41,8 @@ dependencies:
   #firebase_core for connecting to firebase apps
   #firebase_auth for authentication API
 
-  firebase_core: ^1.24.0
-  firebase_auth: ^3.11.2
+  firebase_core: ^2.1.1
+  firebase_auth: ^4.1.1
   modal_progress_hud: ^0.1.3
   font_awesome_flutter: ^10.2.1
   modal_progress_hud_nsn: ^0.3.0
