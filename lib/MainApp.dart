@@ -1,20 +1,5 @@
 import 'package:flutter/material.dart';
 
-//Represents list of popup menu.
-class Menu {
-  final String day;
-
-  const Menu({required this.day});
-}
-
-final List<Menu> value = <Menu>[
-  Menu(day: 'Monday'),
-  Menu(day: 'Tuesday'),
-  Menu(day: 'Wednesday'),
-  Menu(day: 'Thursday'),
-];
-
-List items = List.generate(100, (index) => 'item: $index');
 
 const TextStyle menuStyle = TextStyle(color: Colors.black, fontSize: 13.0);
 
@@ -27,6 +12,8 @@ class ListApp extends StatefulWidget {
 }
 
 class _ListAppState extends State<ListApp> {
+  int _selectedIndex = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -78,16 +65,20 @@ class _ListAppState extends State<ListApp> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(50),
           child: BottomNavigationBar(
+            currentIndex: _selectedIndex,
             backgroundColor: Color(0xECE9E9FF),
-            elevation: 1.0,
+            unselectedFontSize: 10,
+            selectedFontSize: 15,
+            elevation: 3.0,
             onTap: (int value){
               setState(() {
+                _selectedIndex = value;
               });
             },
             items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.accessibility_rounded), label: 'Navigate'),
-              BottomNavigationBarItem(icon: Icon(Icons.accessibility_rounded), label: 'Rush'),
-              BottomNavigationBarItem(icon: Icon(Icons.accessibility_rounded), label: 'Check'),
+              BottomNavigationBarItem(icon: Icon(Icons.account_balance), label: 'Navigate'),
+              BottomNavigationBarItem(icon: Icon(Icons.add_business_sharp), label: 'Rush'),
+              BottomNavigationBarItem(icon: Icon(Icons.add_a_photo_rounded), label: 'Check'),
             ],
           ),
         ),
