@@ -18,6 +18,7 @@ void main() async{
 
   //Removes system statusBar
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  FocusNode focusNode = FocusNode();
 
   runApp(MyApp());
 }

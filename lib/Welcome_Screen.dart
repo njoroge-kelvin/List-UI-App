@@ -1,6 +1,5 @@
 
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -62,6 +61,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
   @override
   void initState(){
     super.initState();
+    focusNode.addListener(_focusChange);
   }
 
   @override
@@ -70,6 +70,9 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
     super.dispose();
   }
 
+  void _focusChange(){
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  }
   // Future pickImage() async {
   //   try {
   //     final image = await picker.pickImage(source: ImageSource.gallery);
@@ -90,7 +93,6 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
         primarySwatch: Colors.lightBlue
       )
     );
-
 
     return Scaffold(
       // appBar: AppBar(
@@ -149,6 +151,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Column(children: [TextFormField(
+                    focusNode: focusNode,
                     textAlignVertical: TextAlignVertical.center,
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
