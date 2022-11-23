@@ -61,12 +61,14 @@ class _ListAppState extends State<ListApp> {
           ],
         ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(50),
+        padding: const EdgeInsets.only(left: 50, right: 50, bottom: 30),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(50)),
+          ),
           child: BottomNavigationBar(
             currentIndex: _selectedIndex,
-            backgroundColor: Color(0xECE9E9FF),
+            backgroundColor: Color(0xEC17674D),
             unselectedFontSize: 10,
             selectedFontSize: 15,
             elevation: 3.0,
@@ -75,10 +77,10 @@ class _ListAppState extends State<ListApp> {
                 _selectedIndex = value;
               });
             },
-            items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.account_balance), label: 'Navigate'),
-              BottomNavigationBarItem(icon: Icon(Icons.add_business_sharp), label: 'Rush'),
-              BottomNavigationBarItem(icon: Icon(Icons.add_a_photo_rounded), label: 'Check'),
+            items: [
+              BottomNavigationBarItem(icon: Icon(Icons.account_balance, color: Theme.of(context).primaryColor,), label: 'Navigate'),
+              BottomNavigationBarItem(icon: Icon(Icons.add_business_sharp, color: Theme.of(context).primaryColor), label: 'Rush'),
+              BottomNavigationBarItem(icon: Icon(Icons.add_a_photo_rounded, color: Theme.of(context).primaryColor), label: 'Check'),
             ],
           ),
         ),

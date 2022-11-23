@@ -26,18 +26,18 @@ class _Login_PageState extends State<Login_Page> {
   Widget build(BuildContext context) {
 
     InputDecoration _lInputDecoration = InputDecoration(
+      hintStyle: TextStyle(color: Colors.grey),
       contentPadding: EdgeInsets.only(left: 40),
       focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+          borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor),
           borderRadius: BorderRadius.all(Radius.circular(50))
       ),
       enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+          borderSide: BorderSide(width: 1.3, color: Theme.of(context).primaryColor),
           borderRadius: BorderRadius.all(Radius.circular(50.0))),
     );
 
     return Scaffold(
-      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -54,7 +54,7 @@ class _Login_PageState extends State<Login_Page> {
               keyboardType: TextInputType.emailAddress,
               textAlign: TextAlign.start,
               decoration: _lInputDecoration.copyWith(
-                hintText: 'Input Email',
+                labelText: 'Input Email',
               ),
             ),
           ),
@@ -65,7 +65,7 @@ class _Login_PageState extends State<Login_Page> {
               obscureText: true,
               textAlign: TextAlign.start,
               decoration: _lInputDecoration.copyWith(
-                hintText: 'Input Password',
+                labelText: 'Input Password',
               ),
             ),
           ),
