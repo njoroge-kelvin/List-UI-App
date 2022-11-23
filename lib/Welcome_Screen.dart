@@ -6,19 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-const kTextFieldDecoration = InputDecoration(
-  hintText: 'Enter a value',
-  hintStyle: TextStyle(color: Colors.grey),
-  contentPadding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 5.0),
-  // border: OutlineInputBorder(
-  //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
-  // ),
-  // focusedBorder: OutlineInputBorder(
-  //   borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.5),
-  //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
-  // ),
-);
-
 SnackBar _snackBar = SnackBar(
     elevation: 5.0,
     duration: const Duration(milliseconds: 850),
@@ -57,21 +44,17 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
   final TextEditingController _username = TextEditingController();
   File? image;
   final picker = ImagePicker();
+  FocusNode focusNode = FocusNode();
 
   @override
   void initState(){
     super.initState();
-    focusNode.addListener(_focusChange);
   }
 
   @override
   void dispose(){
     _pass.dispose();
     super.dispose();
-  }
-
-  void _focusChange(){
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   }
   // Future pickImage() async {
   //   try {
@@ -86,21 +69,23 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    ThemeData theme = ThemeData(
-      colorScheme: ColorScheme.fromSwatch(
-        primarySwatch: Colors.lightBlue
+
+    final kTextFieldDecoration = InputDecoration(
+      hintStyle: TextStyle(color: Colors.grey),
+      contentPadding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 5.0),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor),
+        borderRadius: BorderRadius.circular(50),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor),
+        borderRadius: BorderRadius.circular(50),
       )
     );
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Center(child: Text('Sign Up', style: TextStyle(color: Colors.lightBlueAccent, fontSize: 30),)),
-      //   backgroundColor: Colors.white,
-      //   elevation: 0,
-      // ),
-      // backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       body:
       //Implements progressSpinner on this context
@@ -133,7 +118,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                             borderRadius: BorderRadius.circular(50),
                             // side: BorderSide(color: Colors.white),
                           ),
-                          color: Color(0xFFF5F6F9),
+                          color: Theme.of(context).primaryColor,
                           onPressed: () {
                             // pickImage();
                           },
@@ -151,7 +136,6 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Column(children: [TextFormField(
-                    focusNode: focusNode,
                     textAlignVertical: TextAlignVertical.center,
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
@@ -164,7 +148,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                       email = value;
                       },
                       decoration: kTextFieldDecoration.copyWith(
-                          hintText: 'Enter your email',
+                          labelText: 'Enter your email',
                           prefixIcon: Icon(Icons.email) ),
                     ),
                   SizedBox(height: 10,),
@@ -178,8 +162,8 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                           }
                         },
                         decoration: kTextFieldDecoration.copyWith(
-                            hintText: 'Enter your Phone No.',
-                            prefixIcon: Icon(Icons.phone))),
+                            prefixIcon: Icon(Icons.phone),
+                        labelText: 'Enter Phone no')),
                   SizedBox(height: 10,),
                   TextFormField(
                         textAlignVertical: TextAlignVertical.center,
@@ -191,8 +175,8 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                           }
                         },
                         decoration: kTextFieldDecoration.copyWith(
-                            hintText: 'Input Username',
-                            prefixIcon: Icon(Icons.nest_cam_wired_stand_outlined))),
+                            prefixIcon: Icon(Icons.nest_cam_wired_stand_outlined),
+                        labelText: 'Enter username')),
                   SizedBox(height: 10,),
                   TextFormField(
                     // cursorColor: Colors.lightBlueAccent,
@@ -211,7 +195,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                           password = value;
                         },
                         decoration: kTextFieldDecoration.copyWith(
-                            hintText: 'Enter Password',
+                            labelText: 'Enter Password',
                             prefixIcon: Icon(Icons.account_box_rounded,),)),
                   SizedBox(height: 10,),
                   TextFormField(
@@ -230,7 +214,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                           password = value;
                         },
                         decoration: kTextFieldDecoration.copyWith(
-                            hintText: 'Confirm Password',
+                            labelText: 'Confirm Password',
                             prefixIcon: Icon(Icons.add_alarm_outlined),)),]),
                 ),
                 SizedBox(
@@ -248,7 +232,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                           padding: EdgeInsets.zero,
                           minWidth: 0,
                           elevation: 0,
-                          child: Text('Sign in', style: TextStyle(color: Colors.green),),
+                          child: Text('Sign in', style: TextStyle(color: Theme.of(context).primaryColor),),
                           onPressed: (){
                             Navigator.pushNamed(context, '/login_screen');
                           }),
@@ -262,7 +246,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   elevation: 3.0,
-                  color: Color(0xffe6f5fc),
+                  color: Theme.of(context).primaryColor,
                   // color: Color(0xFF76FF03),
                   child: Text(
                     'Register',

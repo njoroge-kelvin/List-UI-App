@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 // ignore: camel_case_types
@@ -23,6 +24,18 @@ class _Login_PageState extends State<Login_Page> {
 
   @override
   Widget build(BuildContext context) {
+
+    InputDecoration _lInputDecoration = InputDecoration(
+      contentPadding: EdgeInsets.only(left: 40),
+      focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+          borderRadius: BorderRadius.all(Radius.circular(50))
+      ),
+      enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+          borderRadius: BorderRadius.all(Radius.circular(50.0))),
+    );
+
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
@@ -30,7 +43,7 @@ class _Login_PageState extends State<Login_Page> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Icon(Icons.account_circle_sharp, size: 120, color: Colors.lightBlueAccent,),
+          Icon(Icons.account_circle_sharp, size: 120, color: Theme.of(context).primaryColor,),
           SizedBox(height: 10,),
           
           Padding(
@@ -40,16 +53,8 @@ class _Login_PageState extends State<Login_Page> {
               cursorHeight: 25,
               keyboardType: TextInputType.emailAddress,
               textAlign: TextAlign.start,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 40),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 3, color: Colors.lightBlueAccent),
-                  borderRadius: BorderRadius.all(Radius.circular(50))
-                ),
-                hintText: 'Enter Email',
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 3, color: Colors.lightBlueAccent),
-                    borderRadius: BorderRadius.all(Radius.circular(50.0))),
+              decoration: _lInputDecoration.copyWith(
+                hintText: 'Input Email',
               ),
             ),
           ),
@@ -59,36 +64,31 @@ class _Login_PageState extends State<Login_Page> {
               cursorColor: Colors.black,
               obscureText: true,
               textAlign: TextAlign.start,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 40),
-                hintText: 'Enter Password',
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 2, color: Colors.lightBlueAccent),
-                  borderRadius: BorderRadius.all(Radius.circular(50.0))
-                ),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 3, color: Colors.lightBlueAccent),
-                    borderRadius: BorderRadius.all(Radius.circular(50.0))),
+              decoration: _lInputDecoration.copyWith(
+                hintText: 'Input Password',
               ),
             ),
           ),
+
+          //Forgot password link to send verification email
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
+            children: [
               Padding(
                 padding: EdgeInsets.only(right: 20),
-                child: Text('Forgot Password?'),
+                child: Text('Forgot Password?', style: TextStyle(color: Theme.of(context).primaryColor),),
               )
             ],
           ),
+          //Material button to login user
           Padding(
             padding:
                 const EdgeInsets.only(top: 30.0, left: 100.0, right: 100.0),
             child: Material(
               borderRadius: BorderRadius.all(Radius.circular(30)),
               elevation: 5.0,
-              color: Colors.lightBlue,
+              color: Theme.of(context).primaryColor,
               child: MaterialButton(
                 onPressed: _onPressed,
                 child: Text(
@@ -99,16 +99,16 @@ class _Login_PageState extends State<Login_Page> {
             ),
           ),
           Padding(padding: EdgeInsets.only(top: 35, bottom: 60, left: 20, right: 20),
-          child: Center(child: Text('Don\'t have an account')),),
+          child: Center(child: Text('Don\'t have an account', style: TextStyle(color: Theme.of(context).primaryColor),)),),
           Row(
-            children: const[
+            children: [
               Expanded(child: Divider(
                 indent: 10,
                 endIndent: 10,
                 height: 10,
                 thickness: 0.8,
               ),),
-              Text('Or login with'),
+              Text('Or login with', style: TextStyle(color: Theme.of(context).primaryColor),),
               Expanded(child: Divider(
                 indent:10,
                 endIndent: 10,
