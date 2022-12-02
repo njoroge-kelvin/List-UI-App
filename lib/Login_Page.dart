@@ -49,7 +49,6 @@ class _Login_PageState extends State<Login_Page> {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: TextField(
-              cursorColor: Colors.black,
               cursorHeight: 25,
               keyboardType: TextInputType.emailAddress,
               textAlign: TextAlign.start,
@@ -61,7 +60,6 @@ class _Login_PageState extends State<Login_Page> {
           Padding(
             padding: EdgeInsets.only(bottom: 15, left: 15, right: 15,top: 25),
             child: TextField(
-              cursorColor: Colors.black,
               obscureText: true,
               textAlign: TextAlign.start,
               decoration: _lInputDecoration.copyWith(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
+import 'Centr.dart';
 import 'Login_Page.dart';
 import 'MainApp.dart';
 import 'Welcome_Screen.dart';
@@ -26,17 +27,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     MaterialColor _color = MaterialColor(0xff90ee02, const<int, Color> {
-      50: const Color(0xfff2fde4 ),//10%
-      100: const Color(0xffdefabb),//20%
-      200: const Color(0xffc6f68d),//30%
-      300: const Color(0xffaaf255),//40%
-      400: const Color(0xff90ee02),//50%
-      500: const Color(0xff75e900),//60%
-      600: const Color(0xff61d800),//70%
-      700: const Color(0xff41c300),//80%
-      800: const Color(0xff09af00),//90%
-      900: const Color(0xff008b00),
+     MaterialColor color = MaterialColor(0xff90ee02, const<int, Color> {
+      50:  Color(0xfff2fde4 ),//10%
+      100:  Color(0xffdefabb),//20%
+      200:  Color(0xffc6f68d),//30%
+      300:  Color(0xffaaf255),//40%
+      400:  Color(0xff90ee02),//50%
+      500:  Color(0xff75e900),//60%
+      600:  Color(0xff61d800),//70%
+      700:  Color(0xff41c300),//80%
+      800:  Color(0xff09af00),//90%
+      900:  Color(0xff008b00),
     });
 
     return GestureDetector(
@@ -48,14 +49,22 @@ class MyApp extends StatelessWidget {
       },
       child: MaterialApp(
         theme: ThemeData(
-          primaryColor: _color,
-          brightness: Brightness.dark),
+          primarySwatch: color,
+          primaryColor: Color(0xff75e900),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(foregroundColor: Theme.of(context).primaryColor)
+          )
+          // brightness: Brightness.dark
+    ),
         title: 'List UI App',
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
         routes:   <String, WidgetBuilder>{'/': (context) => Welcome_Screen(),
       '/login_screen': (context) => Login_Page(),
-      '/home_screen': (context) => ListApp(),}
+      '/home_screen': (context) => ListApp(),
+      '/center': (context) =>Centr(),
+
+        }
         // home: DefaultTabController(length: 3, child: ListApp()),
       ),
     );
