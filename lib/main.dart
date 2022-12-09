@@ -40,33 +40,25 @@ class MyApp extends StatelessWidget {
       900:  Color(0xff008b00),
     });
 
-    return GestureDetector(
-      onTap: (){
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
-            currentFocus.focusedChild?.unfocus();
-          }
-      },
-      child: MaterialApp(
-        theme: ThemeData(
-          primarySwatch: color,
-          primaryColor: Color(0xff75e900),
-          textButtonTheme: TextButtonThemeData(
-            style: TextButton.styleFrom(foregroundColor: Theme.of(context).primaryColor)
-          )
-          // brightness: Brightness.dark
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: color,
+        primaryColor: Color(0xff90ee02),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(foregroundColor: Theme.of(context).primaryColor)
+        )
+        // brightness: Brightness.dark
     ),
-        title: 'List UI App',
-        debugShowCheckedModeBanner: false,
-        initialRoute: '/',
-        routes:   <String, WidgetBuilder>{'/': (context) => Welcome_Screen(),
-      '/login_screen': (context) => Login_Page(),
-      '/home_screen': (context) => ListApp(),
-      '/center': (context) =>Centr(),
+      title: 'List UI App',
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      routes:   <String, WidgetBuilder>{'/': (context) => Welcome_Screen(),
+    '/login_screen': (context) => Login_Page(),
+    '/home_screen': (context) => MainApp(),
+    '/center': (context) =>Centr(),
 
-        }
-        // home: DefaultTabController(length: 3, child: ListApp()),
-      ),
+      }
+      // home: DefaultTabController(length: 3, child: ListApp()),
     );
   }
 }
