@@ -36,7 +36,7 @@ class _MainAppState extends State<MainApp> {
         ),
 
       floating: true,
-      expandedHeight: 200,
+      expandedHeight: 150,
       stretch: true,
       elevation: 3,
       automaticallyImplyLeading: false,
@@ -56,13 +56,53 @@ class _MainAppState extends State<MainApp> {
         physics: BouncingScrollPhysics(),
         slivers: [
           sliverAppBar,
-          SliverList(delegate: SliverChildBuilderDelegate(
-            childCount: 40,
-            (BuildContext context, int index){
-            return ListTile(leading: Icon(Icons.add_business_sharp), title: Text('title'), trailing: Icon(
-              Icons.add_a_photo_rounded
-            ),);
-          }))
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10,),
+              child: SizedBox(
+                height: 50,
+                child:
+                ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 8,
+                    itemBuilder: (_, index){
+                      return Container(
+                        padding: EdgeInsets.symmetric(vertical: 5),
+                        margin: EdgeInsets.only(right: 10),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25)
+                            ),
+                            backgroundColor: Colors.grey,
+                          ),
+                            onPressed: (){}, child: Text('Create',
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                            fontSize: 20),)),
+                      );
+                    }),
+              ),
+            ),
+          ),
+              SliverGrid(delegate: SliverChildBuilderDelegate((context, index)=>
+                Stack(
+                  children:
+                  [
+                    Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    color: Colors.green,
+                    child: Center(
+                      child: Text('This is a card'),),
+                  ),]
+                )
+              ),
+                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 300,
+                  ))
+
         ],
       ),
     );
