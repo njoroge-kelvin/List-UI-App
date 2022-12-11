@@ -102,8 +102,24 @@ class _MainAppState extends State<MainApp> {
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 300,
                   ))
-
         ],
+      ),
+
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.all(10),
+        child: BottomNavigationBar(
+          items: const[
+            BottomNavigationBarItem(
+                label: 'Texas',
+                icon: Icon(Icons.add_a_photo_rounded,)),
+            BottomNavigationBarItem(
+                label: 'Dallas',
+                icon: Icon(Icons.add_a_photo_rounded,)),
+            BottomNavigationBarItem(
+                label: 'Mashinani',
+                icon: Icon(Icons.add_a_photo_rounded,)),
+          ],
+        ),
       ),
     );
   }

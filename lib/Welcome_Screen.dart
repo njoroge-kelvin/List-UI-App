@@ -1,9 +1,11 @@
 
 import 'dart:io';
+import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:country_picker/country_picker.dart';
 
 SnackBar _snackBar = SnackBar(
     elevation: 5.0,
@@ -38,12 +40,11 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
   late String password = '';
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _pass = TextEditingController();
-  final TextEditingController _confirmPass = TextEditingController();
   final TextEditingController _phoneNumber = TextEditingController();
-  final TextEditingController _username = TextEditingController();
   File? image;
   final picker = ImagePicker();
   FocusNode focusNode = FocusNode();
+  var country = Text('Country');
 
   @override
   void initState(){
@@ -104,7 +105,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                     children: [
                       CircleAvatar(
                         minRadius: 50,
-                        backgroundImage: AssetImage("assets/images/Image1.jpg"),
+                        child: Icon(Icons.account_circle_sharp, size: 20,),
                       ),
                       Positioned(
                         bottom: height * 0,
@@ -117,7 +118,6 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                             borderRadius: BorderRadius.circular(50),
                             // side: BorderSide(color: Colors.white),
                           ),
-                          color: Theme.of(context).primaryColor,
                           onPressed: () {
                             // pickImage();
                           },
@@ -150,7 +150,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                           labelText: 'Enter your email',
                           prefixIcon: Icon(Icons.email) ),
                     ),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 25,),
                   TextFormField(
                         textAlignVertical: TextAlignVertical.center,
                         obscureText: false,
@@ -163,20 +163,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                         decoration: kTextFieldDecoration.copyWith(
                             prefixIcon: Icon(Icons.phone),
                         labelText: 'Enter Phone no')),
-                  SizedBox(height: 10,),
-                  TextFormField(
-                        textAlignVertical: TextAlignVertical.center,
-                        obscureText: false,
-                        controller: _username,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Username slot is empty';
-                          }
-                        },
-                        decoration: kTextFieldDecoration.copyWith(
-                            prefixIcon: Icon(Icons.nest_cam_wired_stand_outlined),
-                        labelText: 'Enter username')),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 25,),
                   TextFormField(
                     // cursorColor: Colors.lightBlueAccent,
                         textAlignVertical: TextAlignVertical.center,
@@ -196,25 +183,17 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                         decoration: kTextFieldDecoration.copyWith(
                             labelText: 'Enter Password',
                             prefixIcon: Icon(Icons.account_box_rounded,),)),
-                  SizedBox(height: 10,),
-                  TextFormField(
-                        textAlignVertical: TextAlignVertical.center,
-                        obscureText: true,
-                        controller: _confirmPass,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Password slot is empty';
-                          }
-                          if (value != _pass.text) {
-                            return 'Password doesn\'t match';
-                          }
-                        },
-                        onChanged: (value) {
-                          password = value;
-                        },
-                        decoration: kTextFieldDecoration.copyWith(
-                            labelText: 'Confirm Password',
-                            prefixIcon: Icon(Icons.add_alarm_outlined),)),]),
+                  ]),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    TextButton(onPressed: (){
+                      showCountryPicker(context: context, onSelect: (Country county){});
+                    }, child: country,)
+                  ],
                 ),
                 SizedBox(
                   height: 20.0,
