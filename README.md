@@ -1,6 +1,9 @@
 # i_am_trading
 
-A trading project.
+A Bicycle sharing project.
+
+The project is aimed at providing bicycle sharing service to campus students
+at affordable prices and convenient time.
 
 ## Getting Started
 

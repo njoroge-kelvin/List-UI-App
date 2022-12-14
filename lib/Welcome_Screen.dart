@@ -38,6 +38,7 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
   bool showSpinner = false;
   late String email = '';
   late String password = '';
+  String? phoneNumber;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _pass = TextEditingController();
   final TextEditingController _phoneNumber = TextEditingController();
@@ -45,6 +46,8 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
   final picker = ImagePicker();
   FocusNode focusNode = FocusNode();
   var country = Text('Country');
+
+
 
   @override
   void initState(){
@@ -160,6 +163,9 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                             return 'Enter you Phone number';
                           }
                         },
+                      onChanged: (value) {
+                        phoneNumber = value;
+                      },
                         decoration: kTextFieldDecoration.copyWith(
                             prefixIcon: Icon(Icons.phone),
                         labelText: 'Enter Phone no')),
@@ -237,10 +243,28 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                     try {
                       if (_formKey.currentState!.validate()) {
                         ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+                        await FirebaseAuth.instance.verifyPhoneNumber(
+                          phoneNumber: phoneNumber,
+                          verificationCompleted: (PhoneAuthCredential credential) async {
+                            await _auth.verifyPhoneNumber(
+                              codeAutoRetrievalTimeout: (String Verification){},
+                              phoneNumber: phoneNumber,
+                              verificationCompleted: (PhoneAuthCredential credential) async {
+                                // ANDROID ONLY!
+                                // Sign the user in (or link) with the auto-generated credential
+                                await _auth.signInWithCredential(credential);
+                              }, verificationFailed: (FirebaseAuthException error) {  }, codeSent: (String verificationId, int? forceResendingToken) {  },
+                            );
+                          },
+
+                          codeSent: (String verificationId, int? resendToken) {},
+                          codeAutoRetrievalTimeout: (String verificationId) {}, verificationFailed: (FirebaseAuthException error) {  },
+                        );
                         final newUser =
-                            await _auth.createUserWithEmailAndPassword(
-                                email: email, password: password);
+                        await _auth.createUserWithEmailAndPassword(
+                            email: email, password: password);
                         if (newUser != null) {
+
                           Navigator.pushNamed(context, '/login_screen');
                         }
                       }
