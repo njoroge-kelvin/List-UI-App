@@ -243,23 +243,23 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                     try {
                       if (_formKey.currentState!.validate()) {
                         ScaffoldMessenger.of(context).showSnackBar(_snackBar);
-                        await FirebaseAuth.instance.verifyPhoneNumber(
-                          phoneNumber: phoneNumber,
-                          verificationCompleted: (PhoneAuthCredential credential) async {
-                            await _auth.verifyPhoneNumber(
-                              codeAutoRetrievalTimeout: (String Verification){},
-                              phoneNumber: phoneNumber,
-                              verificationCompleted: (PhoneAuthCredential credential) async {
-                                // ANDROID ONLY!
-                                // Sign the user in (or link) with the auto-generated credential
-                                await _auth.signInWithCredential(credential);
-                              }, verificationFailed: (FirebaseAuthException error) {  }, codeSent: (String verificationId, int? forceResendingToken) {  },
-                            );
-                          },
-
-                          codeSent: (String verificationId, int? resendToken) {},
-                          codeAutoRetrievalTimeout: (String verificationId) {}, verificationFailed: (FirebaseAuthException error) {  },
-                        );
+                        // await FirebaseAuth.instance.verifyPhoneNumber(
+                        //   phoneNumber: phoneNumber,
+                        //   verificationCompleted: (PhoneAuthCredential credential) async {
+                        //     await _auth.verifyPhoneNumber(
+                        //       codeAutoRetrievalTimeout: (String Verification){},
+                        //       phoneNumber: phoneNumber,
+                        //       verificationCompleted: (PhoneAuthCredential credential) async {
+                        //         // ANDROID ONLY!
+                        //         // Sign the user in (or link) with the auto-generated credential
+                        //         await _auth.signInWithCredential(credential);
+                        //       }, verificationFailed: (FirebaseAuthException error) {  }, codeSent: (String verificationId, int? forceResendingToken) {  },
+                        //     );
+                        //   },
+                        //
+                        //   codeSent: (String verificationId, int? resendToken) {},
+                        //   codeAutoRetrievalTimeout: (String verificationId) {}, verificationFailed: (FirebaseAuthException error) {  },
+                        // );
                         final newUser =
                         await _auth.createUserWithEmailAndPassword(
                             email: email, password: password);
