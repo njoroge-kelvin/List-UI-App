@@ -40,12 +40,12 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
   late String password = '';
   String? phoneNumber;
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _pass = TextEditingController();
   final TextEditingController _phoneNumber = TextEditingController();
   File? image;
   final picker = ImagePicker();
   FocusNode focusNode = FocusNode();
   var country = Text('Country');
+
 
 
 
@@ -56,7 +56,6 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
 
   @override
   void dispose(){
-    _pass.dispose();
     super.dispose();
   }
   // Future pickImage() async {
@@ -168,19 +167,16 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                       },
                         decoration: kTextFieldDecoration.copyWith(
                             prefixIcon: Icon(Icons.phone),
+                        prefixText: "+254",
                         labelText: 'Enter Phone no')),
                   SizedBox(height: 25,),
                   TextFormField(
                     // cursorColor: Colors.lightBlueAccent,
                         textAlignVertical: TextAlignVertical.center,
                         obscureText: true,
-                        controller: _pass,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Password slot is empty';
-                          }
-                          if (value != _pass.text) {
-                            return 'Password doesn\'t match';
                           }
                         },
                         onChanged: (value) {
@@ -243,30 +239,25 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                     try {
                       if (_formKey.currentState!.validate()) {
                         ScaffoldMessenger.of(context).showSnackBar(_snackBar);
-                        // await FirebaseAuth.instance.verifyPhoneNumber(
-                        //   phoneNumber: phoneNumber,
-                        //   verificationCompleted: (PhoneAuthCredential credential) async {
-                        //     await _auth.verifyPhoneNumber(
-                        //       codeAutoRetrievalTimeout: (String Verification){},
-                        //       phoneNumber: phoneNumber,
-                        //       verificationCompleted: (PhoneAuthCredential credential) async {
-                        //         // ANDROID ONLY!
-                        //         // Sign the user in (or link) with the auto-generated credential
-                        //         await _auth.signInWithCredential(credential);
-                        //       }, verificationFailed: (FirebaseAuthException error) {  }, codeSent: (String verificationId, int? forceResendingToken) {  },
-                        //     );
-                        //   },
-                        //
-                        //   codeSent: (String verificationId, int? resendToken) {},
-                        //   codeAutoRetrievalTimeout: (String verificationId) {}, verificationFailed: (FirebaseAuthException error) {  },
-                        // );
-                        final newUser =
-                        await _auth.createUserWithEmailAndPassword(
-                            email: email, password: password);
-                        if (newUser != null) {
 
-                          Navigator.pushNamed(context, '/login_screen');
-                        }
+                        await _auth.verifyPhoneNumber(
+                          phoneNumber: _phoneNumber.text,
+                          verificationCompleted: (PhoneAuthCredential credential) async {
+                            await _auth.signInWithCredential(credential);
+                            Navigator.pushNamed(context, '/login_screen');
+                          },
+
+                          codeSent: (String verificationId, int? resendToken) {},
+                          codeAutoRetrievalTimeout: (String verificationId) {},
+                          verificationFailed: (FirebaseAuthException e) {},
+                        );
+                        // final newUser =
+                        // await _auth.createUserWithEmailAndPassword(
+                        //     email: email, password: password);
+                        // if (newUser != null) {
+                        //
+                        //   Navigator.pushNamed(context, '/login_screen');
+                        // }
                       }
 
                       // if(email.isEmpty || password.isEmpty){

@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
      MaterialColor color = MaterialColor(0xff90ee02, const<int, Color> {
-      50:  Color(0xfff2fde4 ),//10%
+      50:  Color(0xfff2fde4),//10%
       100:  Color(0xffdefabb),//20%
       200:  Color(0xffc6f68d),//30%
       300:  Color(0xffaaf255),//40%
