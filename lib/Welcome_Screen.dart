@@ -241,12 +241,13 @@ class _Welcome_ScreenState extends State<Welcome_Screen> {
                         ScaffoldMessenger.of(context).showSnackBar(_snackBar);
 
                         await _auth.verifyPhoneNumber(
-                          phoneNumber: _phoneNumber.text,
+                          phoneNumber: _phoneNumber.text.toString(),
                           verificationCompleted: (PhoneAuthCredential credential) async {
                             await _auth.signInWithCredential(credential);
                             Navigator.pushNamed(context, '/login_screen');
                           },
 
+                          timeout: const Duration(seconds: 60),
                           codeSent: (String verificationId, int? resendToken) {},
                           codeAutoRetrievalTimeout: (String verificationId) {},
                           verificationFailed: (FirebaseAuthException e) {},
